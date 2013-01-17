@@ -35,13 +35,21 @@ function funcionesDeCarga()
 {
 
     // Comienza el formulario en vio de cargar gastos
-    $("#enviar").click(function(){
+    $("#enviarGasto").click(function(){
         var gasto = parseInt($("input[name=gasto]").val());
+        var causa = parseInt($("input[name=causa]").val());
+
         if(gasto != "")
         {
             $.ajax({
                     type:'POST',
-                    url:'http://www.reiatsu.com.ar/phonegap/control/funciones.php',
+                    url:'https://reiatsu.com.ar/phonegap/control/funciones.php',
+                    data: 'h=cargaGasto&gasto='+gasto+'&causa='+causa,
+                    dataType:'json',
+                    success: function(v){
+                        alert(v['aviso']);
+                        $("#total").html(v['total']);
+                    }
             });
         }
         else

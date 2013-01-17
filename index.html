@@ -101,8 +101,8 @@
   </head>
 
   <body  onload="funcionesDeCarga()" style="background-color:#3b3b3b">
-    
-    <div data-role="page" id="etapa0">
+    <div
+    <div data-role="page" id="etapaInicial">
       <div data-role="header">
         <h1>Ingresa !</h1>
       </div><!-- /header -->
@@ -120,33 +120,52 @@
       <div data-role="header">
         <h1>Bienvenido</h1>
       </div><!-- /header -->
-      <div data-role="content">   
-          <a href="#etapa1" data-transition="fade" data-role="button"> Ingresar Gasto </a>
-          <!-- Boton para la geolocalizacion -->
-          <a href="buscame.php" id="geoLocalizacion" data-role="button" data-icon="search"> Ver Resumen <a>
+      <div data-role="content">
+          <div> Total : <span id="total"> </span></div>
+          <a href="#etapa1" data-transition="fade" data-role="button" data-icon="search"> Qu&eacute; gast&eacute;? </a>
+          <a href="#etapa1" data-transition="fade" data-role="button" data-icon="search"> Qu&eacute; cobr&eacute;? </a>
+          <a href="#etapa2" id="resumen" data-role="button" data-icon="search"> Ver Resumen <a>
+          <a href="#etapa3" id="carga" data-role="button" data-icon="search"> Cargar monto inicial <a>  
       </div><!-- /content -->
   </div><!-- /page -->
 
   <div data-role="page" id="etapa1">
     <div data-role="header">
-      <h1>Ingresa el gasto</h1>
+      <h1>Qu&eacute; gast&eacute;?</h1>
     </div><!-- /header -->
     <div data-role="content">   
-        <input type="text" name="gasto" id="name" value="" placeholder="Argentina, Capital Federal" />
-        <input type="button" id="enviar" value=" Cargar " data-transition="fade" data-role="button" data-inline="true" />
+        <div class=""> Monto </div>
+        <input type="text" name="gasto" id="name" value="" placeholder="ej: 300" />
 
-        <a href="#etapa2" data-transition="fade" data-role="button" data-inline="true">Continuar</a>
-        <a href="#etapa0" data-transition="fade" data-role="button" data-inline="true">Volver</a>
+        <div class=""> Causa </div>
+        <input type="text" name="causa" id="causa" value="" placeholder="ej:Farmacity - (no obligatorio)" />
+        
+        <input type="button" id="enviarGasto" value=" Cargar " data-transition="fade" data-role="button" data-inline="true" />
+
+        <a href="#etapa0" data-transition="fade" data-role="button" data-inline="true">Volver al menu</a>
     </div><!-- /content -->
   </div><!-- /page -->
+
   <div data-role="page" id="etapa2">
     <div data-role="header">
-      <h1>Por donde lo queres encontrar ?</h1>
+      <h1>Ver resumen de gastos</h1>
     </div><!-- /header -->
     <div data-role="content">
        
         <a href="#etapa3" data-transition="fade" data-role="button" data-inline="true">Continuar</a>
         <a href="#etapa1" data-transition="fade" data-role="button" data-inline="true">volver</a>
+    </div><!-- /content -->
+  </div><!-- /page -->
+
+  <div data-role="page" id="etapa3">
+    <div data-role="header">
+      <h1>Carga del monto inicial</h1>
+    </div><!-- /header -->
+    <div data-role="content">   
+        <input type="text" name="gasto" id="name" value="" placeholder="ej: 300" />
+        <input type="button" id="enviar" value=" Cargar " data-transition="fade" data-role="button" data-inline="true" />
+
+        <a href="#etapa0" data-transition="fade" data-role="button" data-inline="true">Volver al menu</a>
     </div><!-- /content -->
   </div><!-- /page -->
 </form>
