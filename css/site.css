@@ -34,7 +34,7 @@
 #pane_5, #pane_6 { -webkit-user-select:text; }
 *:focus { outline-style :none; -webkit-tap-highlight-color: rgba(0,0,0,0);}
 header{background-color:#4a0010; color: White; display:block; font-size:14px;height:17px;padding:5px 0 5px 10px;}
-h1,h2,h1 a{display:inline-block;font-size:13px;vertical-align:middle;}
+h1,h2,h1 a{display:inline-block;font-size:13px;vertical-align:middle;color:#ffffff;}
 h1{margin:0 10px 0 0;padding:0;}
 img{margin:0;padding:0;border:none;}
 div.InfoWindow{font-family:Arial;font-size:90%;}

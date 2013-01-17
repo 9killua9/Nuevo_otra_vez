@@ -14,11 +14,6 @@ $('#trip input#leavedate, #trip input#returndate').datepicker({ dateFormat: 'D, 
 ------ COMIENZO DEL CUERPO ---------------------
 ------------------------------------------------ */
 
-// Declaracion de variables
-$url     = 'php/funciones.php';
-$urlFbk  = 'php/facebook/facebookphp.php';
-$nImagen = 0;
-
 // Documento de inicio.
 $(document).bind("mobileinit",function(){
     $("img").attr("alt","cargando...");
@@ -30,24 +25,47 @@ $(document).bind("mobileinit",function(){
     	a.preventDefault();
     }).submit(function(a){
     	a.preventDefault();
-    });     
-});
-
-function funcionesDeCarga()
-{
-	$(window).mousemove(function(a){
-		tp = a.pageY;
-		lt = a.pageX;
-	}).resize(function(){
-        // Volver a cargar los datos y sacar las medidas cuando se resizea la pantalla ^^ 
-        $w = parseInt($(window).width());
-        $h = parseInt($(window).height());
     });
 
-    $("input[name=busqueda]").change(function(){
-        if($(this).val() == "calle")
-            $("input[name=nombre]").attr("placeholder","ej:Cabildo,Belgrano,Argentina");
+});
+
+
+// funcions de carga 
+function funcionesDeCarga()
+{
+
+    // Comienza el formulario en vio de cargar gastos
+    $("#enviar").click(function(){
+        var gasto = parseInt($("input[name=gasto]").val());
+        if(gasto != "")
+        {
+            $.ajax({
+                    type:'POST',
+                    url:'http://www.reiatsu.com.ar/phonegap/control/funciones.php',
+            });
+        }
         else
-            $("input[name=nombre]").attr("placeholder","ej:Belgrano,Argentina");
-    })
-} // Termina funciones de carga
+            alert("el gasto no fue cargado");
+    });
+    // envia los datos a la base para saber quien hace las transferencias y donde 
+    $("#validar").click(function(){
+
+        var celular = parseInt($("input[name=numero]").val());
+        var email   = $("input[name=email]").val();
+
+        if(celular != "" && email != "")
+        {
+            $.ajax({
+                    type:'GET',
+                    url:'https://reiatsu.com.ar/phonegap/control/funciones.php',
+                    data: 'h=valida&email='+email+'&celular='+celular,
+                    dataType:'json',
+                    success: function(v){
+                        alert(v);
+                    }
+            });
+        }
+        else
+            alert("el gasto no fue cargado");
+    });
+}

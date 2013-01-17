@@ -60,7 +60,7 @@ q:before, q:after { content: ""; content: none; }
 .h100{height:100%;}
 .noBorde,.borderNone{border:none !important;}
      /* igualdad de inputs */
-input[type=text], select, textarea {border:none; width:100px; height:30px; }
+input[type=text], select, textarea, input[type=email] {border:none; width:100px; height:30px; }
     /* links */
 a { text-decoration:none !important;}
 a:hover{}

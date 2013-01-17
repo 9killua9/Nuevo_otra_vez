@@ -97,35 +97,44 @@
             <!-- Jquerys  -->
             <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
             <script type="text/javascript" charset="utf-8" src="js/jquerymobile.js"></script>
+            <script type="text/javascript" charset="utf-8" src="js/gral.js"></script>
   </head>
 
-  <body style="background-colo:#3b3b3b">    
+  <body  onload="funcionesDeCarga()" style="background-color:#3b3b3b">
+    
     <div data-role="page" id="etapa0">
-    <div data-role="header">
-      <h1>Que queres encontrar ?</h1>
-    </div><!-- /header -->
-    <div data-role="content">   
+      <div data-role="header">
+        <h1>Ingresa !</h1>
+      </div><!-- /header -->
+      <div data-role="content">   
+        <div class=""> Nro Celular </div>
+        <input type="text" name="numero" id="numero" value="1137762637" placeholder="11355689XX" />
         
-        <a href="#etapa1" data-transition="fade" data-role="button"> Busqueda avanzada </a>
-
-        <!-- Boton para la geolocalizacion -->
-        <a href="buscame.php" id="geoLocalizacion" data-role="button" data-icon="search"> Buscar por donde estoy <a>
-
-        <!-- Boton para la registracion -->
-        <a href="registrarme.php" id="registro" data-role="button" data-icon="search"> Registrarme <a>
-
-        <!-- Boton para el logueo -->
-        <a href="login.php" id="login" data-role="button" data-icon="search"> Ingresar <a>  
-    </div><!-- /content -->
+        <div class=""> Mail </div>
+        <input type="email" name="email" id="email" value="minombreyapellido@hotmail.es" placeholder="minombreyapellido@hotmail.es" />
+        <input type="button" id="validar" value=" Entrar " data-transition="fade" data-role="button" data-inline="true" />
+      </div><!-- /content -->
   </div><!-- /page -->
+
+    <div data-role="page" id="etapa0">
+      <div data-role="header">
+        <h1>Bienvenido</h1>
+      </div><!-- /header -->
+      <div data-role="content">   
+          <a href="#etapa1" data-transition="fade" data-role="button"> Ingresar Gasto </a>
+          <!-- Boton para la geolocalizacion -->
+          <a href="buscame.php" id="geoLocalizacion" data-role="button" data-icon="search"> Ver Resumen <a>
+      </div><!-- /content -->
+  </div><!-- /page -->
+
   <div data-role="page" id="etapa1">
     <div data-role="header">
-      <h1>Que queres encontrar ?</h1>
+      <h1>Ingresa el gasto</h1>
     </div><!-- /header -->
     <div data-role="content">   
-        <div data-role="fieldcontain"  class="">
-           
-        </div>
+        <input type="text" name="gasto" id="name" value="" placeholder="Argentina, Capital Federal" />
+        <input type="button" id="enviar" value=" Cargar " data-transition="fade" data-role="button" data-inline="true" />
+
         <a href="#etapa2" data-transition="fade" data-role="button" data-inline="true">Continuar</a>
         <a href="#etapa0" data-transition="fade" data-role="button" data-inline="true">Volver</a>
     </div><!-- /content -->
@@ -138,17 +147,6 @@
        
         <a href="#etapa3" data-transition="fade" data-role="button" data-inline="true">Continuar</a>
         <a href="#etapa1" data-transition="fade" data-role="button" data-inline="true">volver</a>
-    </div><!-- /content -->
-  </div><!-- /page -->
-  <div data-role="page" id="etapa3">
-    <div data-role="header">
-      <h1>Ingrese la busqueda</h1>
-    </div><!-- /header -->
-    <div data-role="content">
-        <input type="text" name="nombre" id="name" value="" placeholder="Argentina, Capital Federal" />
-        <input type="submit" id="enviar" value=" buscar " data-transition="fade" data-role="button" data-inline="true" />
-        <a href="#etapa2" data-transition="fade" data-role="button" data-inline="true">Volver</a>
-
     </div><!-- /content -->
   </div><!-- /page -->
 </form>
