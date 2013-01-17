@@ -123,9 +123,9 @@
       <div data-role="content">
           <div> Total : <span id="total"> </span></div>
           <a href="#etapa1" data-transition="fade" data-role="button" data-icon="search"> Qu&eacute; gast&eacute;? </a>
-          <a href="#etapa1" data-transition="fade" data-role="button" data-icon="search"> Qu&eacute; cobr&eacute;? </a>
+          <a href="#etapa4" data-transition="fade" data-role="button" data-icon="search"> Qu&eacute; cobr&eacute;? </a>
           <a href="#etapa2" id="resumen" data-role="button" data-icon="search"> Ver Resumen <a>
-          <a href="#etapa3" id="carga" data-role="button" data-icon="search"> Cargar monto inicial <a>  
+          <a href="#etapa3" id="cargaInicialMenu" class="oculto" data-role="button" data-icon="search"> Cargar monto inicial <a>  
       </div><!-- /content -->
   </div><!-- /page -->
 
@@ -152,8 +152,7 @@
     </div><!-- /header -->
     <div data-role="content">
        
-        <a href="#etapa3" data-transition="fade" data-role="button" data-inline="true">Continuar</a>
-        <a href="#etapa1" data-transition="fade" data-role="button" data-inline="true">volver</a>
+        <a href="#etapa0" data-transition="fade" data-role="button" data-inline="true">Volver al menu</a>
     </div><!-- /content -->
   </div><!-- /page -->
 
@@ -164,6 +163,23 @@
     <div data-role="content">   
         <input type="text" name="gasto" id="name" value="" placeholder="ej: 300" />
         <input type="button" id="enviar" value=" Cargar " data-transition="fade" data-role="button" data-inline="true" />
+
+        <a href="#etapa0" data-transition="fade" data-role="button" data-inline="true">Volver al menu</a>
+    </div><!-- /content -->
+  </div><!-- /page -->
+
+  <div data-role="page" id="etapa4">
+    <div data-role="header">
+      <h1>Qu&eacute; cobr&eacute; ?</h1>
+    </div><!-- /header -->
+    <div data-role="content">   
+        <div class=""> Monto </div>
+        <input type="text" name="gasto" id="name" value="" placeholder="ej: 300" />
+
+        <div class=""> Cliente </div>
+        <input type="text" name="cliente" id="cliente" value="" placeholder="ej:Farmacity - (no obligatorio)" />
+        
+        <input type="button" id="enviarCobro" value=" Cargar " data-transition="fade" data-role="button" data-inline="true" />
 
         <a href="#etapa0" data-transition="fade" data-role="button" data-inline="true">Volver al menu</a>
     </div><!-- /content -->

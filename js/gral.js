@@ -34,6 +34,25 @@ $(document).bind("mobileinit",function(){
 function funcionesDeCarga()
 {
 
+    $.ajax({
+            type:'POST',
+            url:'https://reiatsu.com.ar/phonegap/control/funciones.php',
+            data: 'h=traeTotalAlMes',
+            dataType:'json',
+            success: function(v){
+                if( v['aviso'] == "si")
+                {
+                    $("#total").html(v['total']);
+                }
+                else
+                {
+                    $("#cargaInicialMenu").show();
+                    $("#total").html(0);
+                }
+
+            }
+    });
+
     // Comienza el formulario en vio de cargar gastos
     $("#enviarGasto").click(function(){
         var gasto = parseInt($("input[name=gasto]").val());
@@ -48,6 +67,7 @@ function funcionesDeCarga()
                     dataType:'json',
                     success: function(v){
                         alert(v['aviso']);
+                        $.mobile.changePage( "#etapa0" );
                         $("#total").html(v['total']);
                     }
             });
@@ -55,6 +75,30 @@ function funcionesDeCarga()
         else
             alert("el gasto no fue cargado");
     });
+
+    // Comienza el formulario en vio de cargar Cobro
+    $("#enviarCobro").click(function(){
+        var cobro   = parseInt($("input[name=cobro]").val());
+        var cliente = parseInt($("input[name=cliente]").val());
+
+        if(cobro != "")
+        {
+            $.ajax({
+                    type:'POST',
+                    url:'https://reiatsu.com.ar/phonegap/control/funciones.php',
+                    data: 'h=cargaCobro&cobro='+cobro+'&cliente='+cliente,
+                    dataType:'json',
+                    success: function(v){
+                        alert(v['aviso']);
+                        $.mobile.changePage( "#etapa0" );
+                        $("#total").html(v['total']);
+                    }
+            });
+        }
+        else
+            alert("el cobro no fue cargado");
+    });
+
     // envia los datos a la base para saber quien hace las transferencias y donde 
     $("#validar").click(function(){
 
@@ -67,7 +111,7 @@ function funcionesDeCarga()
                     type:'POST',
                     url:'https://reiatsu.com.ar/phonegap/control/funciones.php',
                     data: 'h=valida&email='+email+'&celular='+celular,
-                    dataType:'html',
+                    dataType:'json',
                     success: function(v){
                         $.mobile.changePage( "#etapa0" );
                     }
