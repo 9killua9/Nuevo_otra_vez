@@ -61,7 +61,7 @@ function funcionesDeCarga()
                     data: 'h=valida&email='+email+'&celular='+celular,
                     dataType:'json',
                     success: function(v){
-                        alert(v);
+                        alert(v['aviso']);
                     }
             });
         }
