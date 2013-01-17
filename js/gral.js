@@ -67,9 +67,9 @@ function funcionesDeCarga()
                     type:'POST',
                     url:'https://reiatsu.com.ar/phonegap/control/funciones.php',
                     data: 'h=valida&email='+email+'&celular='+celular,
-                    dataType:'json',
+                    dataType:'html',
                     success: function(v){
-                        $.mobile.loadPage( "#etapa0" );
+                        $.mobile.changePage( "#etapa0" );
                     }
             });
         }
