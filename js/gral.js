@@ -46,7 +46,7 @@ function funcionesDeCarga()
                 }
                 else
                 {
-                    $("#cargaInicialMenu").show();
+                    $("#cargainicialmenucontenedor").show();
                     $("#total").html(0);
                 }
 
