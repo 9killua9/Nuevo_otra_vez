@@ -56,7 +56,7 @@ function funcionesDeCarga()
         if(celular != "" && email != "")
         {
             $.ajax({
-                    type:'GET',
+                    type:'POST',
                     url:'https://reiatsu.com.ar/phonegap/control/funciones.php',
                     data: 'h=valida&email='+email+'&celular='+celular,
                     dataType:'json',
