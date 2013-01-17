@@ -69,7 +69,7 @@ function funcionesDeCarga()
                     data: 'h=valida&email='+email+'&celular='+celular,
                     dataType:'json',
                     success: function(v){
-                        alert(v['aviso']);
+                        $.mobile.loadPage( "#etapa0" );
                     }
             });
         }
