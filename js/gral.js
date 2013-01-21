@@ -13,7 +13,7 @@ $('#trip input#leavedate, #trip input#returndate').datepicker({ dateFormat: 'D, 
 /* ---------------------------------------------
 ------ COMIENZO DEL CUERPO ---------------------
 ------------------------------------------------ */
-    $url = 'https://reiatsu.com.ar/phonegap/control/funciones.php';
+    $url = 'http://www.reiatsu.com.ar/phonegap/control/funciones.php';
   /*$url = 'funciones.php';*/
 // Documento de inicio.
 $(document).bind("mobileinit",function(){
@@ -30,7 +30,10 @@ $(document).bind("mobileinit",function(){
 
 });
 
-
+function limpiarInputs()
+{
+    $("inputs[type=text]").val("");
+}
 // funcions de carga 
 function funcionesDeCarga()
 {
@@ -39,6 +42,9 @@ function funcionesDeCarga()
         var gasto = parseInt($("input[name=gasto]").val());
         var causa = $("input[name=causa]").val();
         var celular =  $("#guardaCelular").html();
+            habilit = $(this).attr("id");
+
+        desHabilitaId(habilit);
 
         if(gasto != "")
         {
@@ -51,6 +57,9 @@ function funcionesDeCarga()
                         alert(v['aviso']);
                         $.mobile.changePage( "#etapa0" );
                         $("#total").html(v['total']);
+                        limpiarInputs();
+
+                        habilitaId(habilit)
                     }
             });
         }
@@ -63,6 +72,9 @@ function funcionesDeCarga()
         var cobro   = parseInt($("input[name=cobro]").val());
         var cliente = $("input[name=cliente]").val();
         var celular =  $("#guardaCelular").html();
+            habilit = $(this).attr("id");
+
+        desHabilitaId(habilit);
 
         if(cobro != "")
         {
@@ -75,6 +87,8 @@ function funcionesDeCarga()
                         alert(v['aviso']);
                         $.mobile.changePage( "#etapa0" );
                         $("#total").html(v['total']);
+                        limpiarInputs();
+                        habilitaId(habilit);
                     }
             });
         }
@@ -84,10 +98,12 @@ function funcionesDeCarga()
 
     // envia los datos a la base para saber quien hace las transferencias y donde 
     $("#validar").click(function(){
-
         var celular = parseInt($("input[name=numero]").val());
         var email   = $("input[name=email]").val();
-        
+            habilit = $(this).attr("id");
+
+        desHabilitaId(habilit);
+
         $("#guardaCelular").html(celular);
 
         if(celular != "" && email != "")
@@ -117,6 +133,8 @@ function funcionesDeCarga()
                                         $("#total").html(0);
                                     }
 
+                                    limpiarInputs();
+                                    habilitaId(habilit);
                                 }
                         });
                     }
@@ -125,4 +143,13 @@ function funcionesDeCarga()
         else
             alert("el gasto no fue cargado");
     });
+}
+
+function desHabilitaId(habilit)
+{
+    $("#"+habilit).attr("id",habilit+"X").addClass("cambiaColor");
+}
+function habilitaId(habilit)
+{
+    $("#"+habilit+'X').attr("id",habilit).removeClass("cambiaColor");
 }

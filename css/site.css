@@ -44,3 +44,4 @@ footer{background-color: #E0E1E2;border-top:solid 1px black;height:29px;padding:
 #LoadingDiv{-moz-opacity:.25;-khtml-opacity:.25;background-color:Black;opacity:.25;width:100%;z-index:1000;position:absolute;top:27px;bottom:44px;left: 0;right:0;}
 #LoadingDiv p{height:32px;margin:0;position:absolute;top:50%;vertical-align:middle;width:100%;}
 #LoadingDiv img{display:block;height:32px;margin:0 auto;position:relative;top:-50%;width:32px;}
+.cambiaColor{background-color:#0c9db7;}
