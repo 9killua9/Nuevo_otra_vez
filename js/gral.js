@@ -13,7 +13,8 @@ $('#trip input#leavedate, #trip input#returndate').datepicker({ dateFormat: 'D, 
 /* ---------------------------------------------
 ------ COMIENZO DEL CUERPO ---------------------
 ------------------------------------------------ */
-
+//$url = 'https://reiatsu.com.ar/phonegap/control/funciones.php';
+  $url = 'funciones.php';
 // Documento de inicio.
 $(document).bind("mobileinit",function(){
     $("img").attr("alt","cargando...");
@@ -33,37 +34,18 @@ $(document).bind("mobileinit",function(){
 // funcions de carga 
 function funcionesDeCarga()
 {
-
-    $.ajax({
-            type:'POST',
-            url:'https://reiatsu.com.ar/phonegap/control/funciones.php',
-            data: 'h=traeTotalAlMes',
-            dataType:'json',
-            success: function(v){
-                if( v['aviso'] == "si")
-                {
-                    $("#total").html(v['total']);
-                }
-                else
-                {
-                    $("#cargainicialmenucontenedor").show();
-                    $("#total").html(0);
-                }
-
-            }
-    });
-
     // Comienza el formulario en vio de cargar gastos
     $("#enviarGasto").click(function(){
         var gasto = parseInt($("input[name=gasto]").val());
-        var causa = parseInt($("input[name=causa]").val());
+        var causa = $("input[name=causa]").val();
+        var celular =  $("#guardaCelular").html();
 
         if(gasto != "")
         {
             $.ajax({
                     type:'POST',
-                    url:'https://reiatsu.com.ar/phonegap/control/funciones.php',
-                    data: 'h=cargaGasto&gasto='+gasto+'&causa='+causa,
+                    url:$url,
+                    data: 'h=cargaGasto&gasto='+gasto+'&causa='+causa+'&celular='+celular,
                     dataType:'json',
                     success: function(v){
                         alert(v['aviso']);
@@ -79,14 +61,15 @@ function funcionesDeCarga()
     // Comienza el formulario en vio de cargar Cobro
     $("#enviarCobro").click(function(){
         var cobro   = parseInt($("input[name=cobro]").val());
-        var cliente = parseInt($("input[name=cliente]").val());
+        var cliente = $("input[name=cliente]").val();
+        var celular =  $("#guardaCelular").html();
 
         if(cobro != "")
         {
             $.ajax({
                     type:'POST',
-                    url:'https://reiatsu.com.ar/phonegap/control/funciones.php',
-                    data: 'h=cargaCobro&cobro='+cobro+'&cliente='+cliente,
+                    url:$url,
+                    data: 'h=cargaCobro&cobro='+cobro+'&cliente='+cliente+'&celular='+celular,
                     dataType:'json',
                     success: function(v){
                         alert(v['aviso']);
@@ -104,16 +87,38 @@ function funcionesDeCarga()
 
         var celular = parseInt($("input[name=numero]").val());
         var email   = $("input[name=email]").val();
+        
+        $("#guardaCelular").html(celular);
 
         if(celular != "" && email != "")
         {
             $.ajax({
                     type:'POST',
-                    url:'https://reiatsu.com.ar/phonegap/control/funciones.php',
+                    url:$url,
                     data: 'h=valida&email='+email+'&celular='+celular,
                     dataType:'json',
                     success: function(v){
                         $.mobile.changePage( "#etapa0" );
+
+                        var celular =  $("#guardaCelular").html();
+                        $.ajax({
+                                type:'POST',
+                                url:$url,
+                                data: 'h=traeTotalAlMes&celular='+celular,
+                                dataType:'json',
+                                success: function(v){
+                                    if( v['aviso'] == "si")
+                                    {
+                                        $("#total").html(v['total']);
+                                    }
+                                    else
+                                    {
+                                        $("#cargainicialmenucontenedor").show();
+                                        $("#total").html(0);
+                                    }
+
+                                }
+                        });
                     }
             });
         }

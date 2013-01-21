@@ -101,17 +101,19 @@
   </head>
 
   <body  onload="funcionesDeCarga()" style="background-color:#3b3b3b">
-    <div
+    <div class="oculto">
+      <div id="guardaCelular"></div>
+    </div>
     <div data-role="page" id="etapaInicial">
       <div data-role="header">
         <h1>Ingresa !</h1>
       </div><!-- /header -->
       <div data-role="content">   
         <div class=""> Nro Celular </div>
-        <input type="text" name="numero" id="numero" value="1137762637" placeholder="11355689XX" />
+        <input type="text" name="numero" id="numero" value="" placeholder="11355689XX" />
         
         <div class=""> Mail </div>
-        <input type="email" name="email" id="email" value="minombreyapellido@hotmail.es" placeholder="minombreyapellido@hotmail.es" />
+        <input type="email" name="email" id="email" value="" placeholder="minombreyapellido@hotmail.es" />
         <input type="button" id="validar" value=" Entrar " data-transition="fade" data-role="button" data-inline="true" />
       </div><!-- /content -->
   </div><!-- /page -->
