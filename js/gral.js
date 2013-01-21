@@ -13,8 +13,8 @@ $('#trip input#leavedate, #trip input#returndate').datepicker({ dateFormat: 'D, 
 /* ---------------------------------------------
 ------ COMIENZO DEL CUERPO ---------------------
 ------------------------------------------------ */
-//$url = 'https://reiatsu.com.ar/phonegap/control/funciones.php';
-  $url = 'funciones.php';
+    $url = 'https://reiatsu.com.ar/phonegap/control/funciones.php';
+  /*$url = 'funciones.php';*/
 // Documento de inicio.
 $(document).bind("mobileinit",function(){
     $("img").attr("alt","cargando...");
