@@ -32,7 +32,7 @@ $(document).bind("mobileinit",function(){
 
 function limpiarInputs()
 {
-    $("inputs[type=text]").val("");
+    $("input[type=text]").val("");
 }
 // funcions de carga 
 function funcionesDeCarga()
