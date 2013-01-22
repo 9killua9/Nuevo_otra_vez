@@ -45,3 +45,8 @@ footer{background-color: #E0E1E2;border-top:solid 1px black;height:29px;padding:
 #LoadingDiv p{height:32px;margin:0;position:absolute;top:50%;vertical-align:middle;width:100%;}
 #LoadingDiv img{display:block;height:32px;margin:0 auto;position:relative;top:-50%;width:32px;}
 .cambiaColor{background-color:#0c9db7;}
+.backTotal{
+	border-bottom: 1px solid #9b9b9b;
+	padding: 5px;
+	margin-bottom: 3px;
+}
