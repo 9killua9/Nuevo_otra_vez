@@ -50,3 +50,6 @@ footer{background-color: #E0E1E2;border-top:solid 1px black;height:29px;padding:
 	padding: 5px;
 	margin-bottom: 3px;
 }
+.titulito{ color:#3b3b3b; font-size:14px; font-weight: bold; padding:5px;}
+.w70{ width:60%; margin-right: 4px;}
+.w30{ width:30%;};
