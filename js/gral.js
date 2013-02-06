@@ -37,6 +37,7 @@ function limpiarInputs()
 // funcions de carga 
 function funcionesDeCarga()
 {
+    chequeaLogueo();
     // Comienza el formulario en vio de cargar gastos
     $("#enviarGasto").click(function(){
         var gasto = parseInt($("input[name=gasto]").val());
@@ -211,7 +212,7 @@ function funcionesDeCarga()
                 }
             });
     });
-
+    
     // envia los datos a la base para saber quien hace las transferencias y donde 
     $("#validar").click(function(){
         var celular = parseInt($("input[name=numero]").val());
@@ -233,26 +234,13 @@ function funcionesDeCarga()
                         $.mobile.changePage( "#etapa0" );
 
                         var celular =  $("#guardaCelular").html();
-                        $.ajax({
-                                type:'POST',
-                                url:$url,
-                                data: 'h=traeTotalAlMes&celular='+celular,
-                                dataType:'json',
-                                success: function(v){
-                                    if( v['aviso'] == "si")
-                                    {
-                                        $("#total").html(v['total']);
-                                    }
-                                    else
-                                    {
-                                        $("#cargainicialmenucontenedor").show();
-                                        $("#total").html(0);
-                                    }
 
-                                    limpiarInputs();
-                                    habilitaId(habilit);
-                                }
-                        });
+                        window.localStorage.setItem("celular", celular);
+                        keyname = window.localStorage.key("celular");
+                        // keyname is now equal to "key"
+                        celular = window.localStorage.getItem(keyname);
+                        
+                        traeDatos(celular,habilit);
                     }
             });
         }
@@ -260,7 +248,29 @@ function funcionesDeCarga()
             alert("el gasto no fue cargado");
     });
 }
+function traeDatos(celular,habilit)
+{
+    $.ajax({
+            type:'POST',
+            url:$url,
+            data: 'h=traeTotalAlMes&celular='+celular,
+            dataType:'json',
+            success: function(v){
+                if( v['aviso'] == "si")
+                {
+                    $("#total").html(v['total']);
+                }
+                else
+                {
+                    $("#cargainicialmenucontenedor").show();
+                    $("#total").html(0);
+                }
 
+                limpiarInputs();
+                habilitaId(habilit);
+            }
+    });
+}
 function desHabilitaId(habilit)
 {
     $("#"+habilit).attr("id",habilit+"X").addClass("cambiaColor");
@@ -268,4 +278,17 @@ function desHabilitaId(habilit)
 function habilitaId(habilit)
 {
     $("#"+habilit+'X').attr("id",habilit).removeClass("cambiaColor");
+}
+function chequeaLogueo()
+{
+    if( window.localStorage.getItem("celular") != null || window.localStorage.getItem("celular") != "NULL")
+    {
+        keyname = window.localStorage.key("celular");
+        // keyname is now equal to "key"
+        celular = window.localStorage.getItem(keyname);
+        
+        $("#guardaCelular").html(celular);
+        traeDatos(celular);
+        $.mobile.changePage( "#etapa0" );
+    }
 }
