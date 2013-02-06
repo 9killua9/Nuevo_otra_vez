@@ -12,82 +12,120 @@
     //
     document.addEventListener("deviceready",onDeviceReady,false);
 
-    // Cordova is ready to be used!
+    // Cordova is ready
     //
     function onDeviceReady() {
-        pictureSource=navigator.camera.PictureSourceType;
-        destinationType=navigator.camera.DestinationType;
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
     }
 
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoDataSuccess(imageData) {
-      // Uncomment to view the base64 encoded image data
-      // console.log(imageData);
+    var fileSystem;
 
-      // Get image handle
-      //
-      var smallImage = document.getElementById('smallImage');
+//generic getById
+function getById(id) {
+    return document.querySelector(id);
+}
+//generic content logger
+function logit(s) {
+    getById("#content").innerHTML += s;
+}
 
-      // Unhide image elements
-      //
-      smallImage.style.display = 'block';
+//generic error handler
+function onError(e) {
+    getById("#content").innerHTML = "<h2>Error</h2>"+e.toString();
+}
 
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      smallImage.src = "data:image/jpeg;base64," + imageData;
+function doDeleteFile(e) {
+    fileSystem.root.getFile("test.txt", {create:true}, function(f) {
+        f.remove(function() {
+            logit("File removed<p/>"); 
+        });
+    }, onError);
+}
+
+function metadataFile(m) {
+    logit("File was last modified "+m.modificationTime+"<p/>");    
+}
+
+function doMetadataFile(e) {
+    fileSystem.root.getFile("test.txt", {create:true}, function(f) {
+        f.getMetadata(metadataFile,onError);
+    }, onError);
+}
+
+function readFile(f) {
+    reader = new FileReader();
+    reader.onloadend = function(e) {
+        console.log("go to end");
+        logit("<pre>" + e.target.result + "</pre><p/>");
     }
+    reader.readAsText(f);
+}
 
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoURISuccess(imageURI) {
-      // Uncomment to view the image file URI 
-      // console.log(imageURI);
+function doReadFile(e) {
+    fileSystem.root.getFile("test.txt", {create:true}, readFile, onError);
+}
 
-      // Get image handle
-      //
-      var largeImage = document.getElementById('largeImage');
+function appendFile(f) {
 
-      // Unhide image elements
-      //
-      largeImage.style.display = 'block';
+    f.createWriter(function(writerOb) {
+        writerOb.onwrite=function() {
+            logit("Done writing to file.<p/>");
+        }
+        //go to the end of the file...
+        writerOb.seek(writerOb.length);
+        writerOb.write("Test at "+new Date().toString() + "\n");
+    })
 
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      largeImage.src = imageURI;
+}
+
+function doAppendFile(e) {
+    fileSystem.root.getFile("test.txt", {create:true}, appendFile, onError);
+}
+
+function gotFiles(entries) {
+    var s = "";
+    for(var i=0,len=entries.length; i<len; i++) {
+        //entry objects include: isFile, isDirectory, name, fullPath
+        s+= entries[i].fullPath;
+        if (entries[i].isFile) {
+            s += " [F]";
+        }
+        else {
+            s += " [D]";
+        }
+        s += "<br/>";
+        
     }
+    s+="<p/>";
+    logit(s);
+}
 
-    // A button will call this function
-    //
-    function capturePhoto() {
-      // Take picture using device camera and retrieve image as base64-encoded string
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
-        destinationType: destinationType.DATA_URL });
-    }
+function doDirectoryListing(e) {
+    //get a directory reader from our FS
+    var dirReader = fileSystem.root.createReader();
 
-    // A button will call this function
-    //
-    function capturePhotoEdit() {
-      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
-        destinationType: destinationType.DATA_URL });
-    }
+    dirReader.readEntries(gotFiles,onError);        
+}
 
-    // A button will call this function
-    //
-    function getPhoto(source) {
-      // Retrieve image file location from specified source
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
-        destinationType: destinationType.FILE_URI,
-        sourceType: source });
-    }
+function onFSSuccess(fs) {
+    fileSystem = fs;
 
-    // Called if something bad happens.
-    // 
-    function onFail(message) {
-      alert('Failed because: ' + message);
+    getById("#dirListingButton").addEventListener("touchstart",doDirectoryListing);            
+    getById("#addFileButton").addEventListener("touchstart",doAppendFile);            
+    getById("#readFileButton").addEventListener("touchstart",doReadFile);            
+    getById("#metadataFileButton").addEventListener("touchstart",doMetadataFile);            
+    getById("#deleteFileButton").addEventListener("touchstart",doDeleteFile);            
+    
+    logit( "Got the file system: "+fileSystem.name +"<br/>" +
+                                    "root entry name is "+fileSystem.root.name + "<p/>")    
+
+    doDirectoryListing();
+} 
+
+function onDeviceReady() {
+
+    //request the persistent file system
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, onError);
     }
     </script>
     <!-- CSS -->
@@ -115,6 +153,16 @@
         <div class=""> Mail </div>
         <input type="email" name="email" id="email" value="" placeholder="minombreyapellido@hotmail.es" />
         <input type="button" id="validar" value=" Entrar " data-transition="fade" data-role="button" data-inline="true" />
+        
+          <!-- BORRAR DESPUES -->
+        <button id="addFileButton">Create/Append to Test File</button>
+        <button id="readFileButton">Read Test File</button>
+        <button id="metadataFileButton">Get Test File Metadata</button>
+        <button id="deleteFileButton">Delete Test File</button>
+        <button id="dirListingButton">Show Directory Contents</button>
+
+        <div id="content"></div>
+
       </div><!-- /content -->
   </div><!-- /page -->
 
